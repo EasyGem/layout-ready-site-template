@@ -3,12 +3,8 @@
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 
-@import "compass/reset";
-
-h1 {
-  color: #aaa;
-  background-color: #fcc;
-  a {
-    color: blue;
-  }
+body, html {
+	font-family: 'Source Sans Pro';
+	font-weight: 200;
+	font-size: 40px;
 }

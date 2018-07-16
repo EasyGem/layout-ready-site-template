@@ -1,32 +1,14 @@
-<?php
-$destination = "op@eactt.ru";
+<?php 
 
 $name = $_POST['name'];
-$phone = $_POST['phone'];
 $email = $_POST['email'];
-$comment = $_POST['comment'];
+$message = $_POST['message'];
+$formcontent="Сообщение с сайта 4dea.ru\n\nFrom: $name \nMessage: $message";
+$recipient = "ytacademy@ya.ru";
+$subject = "4dea.ru – Contact Form";
+$mailheader = "From: $email \r\n";
 
-$name = htmlspecialchars($name);
-$phone = htmlspecialchars($phone);
-$email = htmlspecialchars($email);
-$comment = htmlspecialchars($comment);
+if(isset($name) and isset($email)) 
+  mail($recipient, $subject, $formcontent, $mailheader);
 
-$name = urldecode($name);
-$phone = urldecode($phone);
-$email = urldecode($email);
-$comment = urldecode($comment);
-
-$name = trim($name);
-$phone = trim($phone);
-$email = trim($email);
-$comment = trim($comment);
-
-$headers = 'From: <'.$email.'>' . "\r\n";
-$headers .= "Content-type: text/html; charset=\"utf-8\"";
-
-if(isset($name) and isset($phone)) {
-mail($destination, 
-  "Заявка с сайта 'Технологии Труда'", "Имя: ".$name."\n E-mail: ".$email. "\n Телефон: ". $phone . "\r\n************\n".$comment , $headers);
-};
-  ?>
-  
+?>

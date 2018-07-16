@@ -10,11 +10,14 @@ $(document).ready(function() {
 	//Stellar - Parallax Plugin
 	//Документация: https://github.com/markdalgleish/stellar.js
 	//HTML: <div class="parallax" data-stellar-background-ratio="0.5"></div>
-	$.stellar({
-		horizontalScrolling: false,
-		verticalOffset: 40
-	});
 	
+	$(function(){
+		$.stellar({
+			horizontalScrolling: false,
+			verticalOffset: 40
+		});
+	});
+
 	//WOW ANIMATION
 		wow = new WOW(
 	  {
@@ -103,19 +106,35 @@ $('.owl-carousel').owlCarousel({
 
 	//Аякс отправка форм
 	//Документация: http://api.jquery.com/jquery.ajax/
-	$("form").submit(function() {
-		$.ajax({
-			type: "GET",
-			url: "mail.php",
-			data: $("form").serialize()
-		}).done(function() {
-			alert("Спасибо за заявку!");
-			setTimeout(function() {
-				$.fancybox.close();
-			}, 1000);
-		});
-		return false;
-	});
+	$("#contact-form").submit(function() {
+    var pattern = /^[a-z0-9_-]+@[a-z0-9-]+\.([a-z]{1,6}\.)?[a-z]{2,6}$/i;
+    if (!(
+      ($('#contact-form input[name="name"]').val().length > 0)
+      && ($('#contact-form input[name="email"]').val().length > 0)
+      && ($('#contact-form textarea[name="message"]').val().length > 0)
+      )){
+      $("#announce-block").text('Заполните все поля формы!');
+      return false;
+    };
+    if(!(
+      pattern.test($('#contact-form input[name="email"]').val())
+      ))
+    {
+      $("#announce-block").text('E-mail введён некорректно!');
+      return false;
+    };
+    $.ajax({
+      type: "POST",
+      url: "mail.php",
+      data: $("#contact-form").serialize()
+    }).done(function() {
+      $("#announce-block").text('Сообщение успешно отправлено!');
+      $("#contact-form input.submit").hide();
+    }).fail(function() {
+      $("#announce-block").text('При отправке сообщения возникла ошибка. Пожалуйста, свяжитесь со мной по почте ytacademy@ya.ru');
+    });
+    return false;
+  });
 	
 });
 
